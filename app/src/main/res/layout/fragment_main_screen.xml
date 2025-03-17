@@ -29,6 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingTop="48dp"
             android:drawableTop="@drawable/ic_file_open_48dp"
             android:text="@string/action_open_doc_tree"
             android:textColor="@android:color/primary_text_dark" />
@@ -39,6 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingTop="48dp"
             android:drawableTop="@drawable/ic_link_48dp"
             android:text="@string/action_open_url"
             android:textColor="@android:color/primary_text_dark" />
@@ -58,6 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingTop="48dp"
             android:drawableTop="@drawable/ic_folder_white_48dp"
             android:text="@string/file_picker_old"
             android:textColor="@android:color/primary_text_dark" />
@@ -68,6 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:paddingTop="48dp"
             android:drawableTop="@drawable/ic_settings_black_48dp"
             android:text="@string/action_settings"
             android:textColor="@android:color/primary_text_dark" />
