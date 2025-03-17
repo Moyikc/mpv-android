@@ -700,8 +700,7 @@ class MPVActivity : AppCompatActivity(), MPVLib.EventObserver, TouchGesturesObse
         }
 
         // try built-in event handler first, forward all other events to libmpv
-        val handled = interceptDpad(ev) ||
-                (ev.action == KeyEvent.ACTION_DOWN && interceptKeyDown(ev)) ||
+        val handled = (ev.action == KeyEvent.ACTION_DOWN && interceptKeyDown(ev)) ||
                 player.onKey(ev)
         if (handled) {
             return true
@@ -760,61 +759,6 @@ class MPVActivity : AppCompatActivity(), MPVLib.EventObserver, TouchGesturesObse
                 }
             }
         }
-    }
-
-    private fun interceptDpad(ev: KeyEvent): Boolean {
-        if (btnSelected == -1) { // UP and DOWN are always grabbed and overriden
-            when (ev.keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN -> {
-                    if (ev.action == KeyEvent.ACTION_DOWN) { // activate dpad navigation
-                        btnSelected = 0
-                        updateSelectedDpadButton()
-                        showControls()
-                    }
-                    return true
-                }
-            }
-            return false
-        }
-
-        // this runs when dpad nagivation is active:
-        when (ev.keyCode) {
-            KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_DPAD_DOWN -> {
-                if (ev.action == KeyEvent.ACTION_DOWN) { // deactivate dpad navigation
-                    btnSelected = -1
-                    updateSelectedDpadButton()
-                    hideControlsFade()
-                }
-                return true
-            }
-            KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                if (ev.action == KeyEvent.ACTION_DOWN) {
-                    btnSelected = (btnSelected + 1) % dpadButtons().count()
-                    updateSelectedDpadButton()
-                }
-                return true
-            }
-            KeyEvent.KEYCODE_DPAD_LEFT -> {
-                if (ev.action == KeyEvent.ACTION_DOWN) {
-                    val count = dpadButtons().count()
-                    btnSelected = (count + btnSelected - 1) % count
-                    updateSelectedDpadButton()
-                }
-                return true
-            }
-            KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
-                if (ev.action == KeyEvent.ACTION_UP) {
-                    val view = dpadButtons().elementAtOrNull(btnSelected)
-                    // 500ms appears to be the standard
-                    if (ev.eventTime - ev.downTime > 500L)
-                        view?.performLongClick()
-                    else
-                        view?.performClick()
-                }
-                return true
-            }
-        }
-        return false
     }
 
     private fun updateSelectedDpadButton() {
